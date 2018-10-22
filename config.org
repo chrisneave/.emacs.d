@@ -1,0 +1,196 @@
+* Setup
+** Package Repositories
+
+#+BEGIN_SRC emacs-lisp
+(require 'package)
+
+(add-to-list 'package-archives
+             '("gnu" . "https://elpa.gnu.org/packages/") t)
+(add-to-list 'package-archives
+             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+
+(package-initialize)
+#+END_SRC
+
+*** Refresh package sources
+
+#+BEGIN_SRC emacs-lisp
+(when (not package-archive-contents)
+  (package-refresh-contents))
+#+END_SRC
+
+*** Package loader
+
+Define a function that will load a package if it is not already installed.
+
+#+BEGIN_SRC emacs-lisp
+(defun my/package-install-if-missing (package)
+  "Install the specified package if not already installed."
+  (unless (package-installed-p package)
+    (package-install package)))
+#+END_SRC
+
+*** Package management
+
+#+BEGIN_SRC emacs-lisp
+(my/package-install-if-missing 'use-package)
+(require 'use-package)
+#+END_SRC
+
+*** Disable customized settings
+
+#+BEGIN_SRC emacs-lisp
+(setq custom-file (make-temp-file "emacs-custom"))
+#+END_SRC
+
+*** Disable help screen on startup
+
+#+BEGIN_SRC emacs-lisp
+(setq inhibit-startup-screen t)
+#+END_SRC
+
+*** MacOS settings
+
+Use command key as the Meta key so that Alt can be used to insert special characters.
+
+#+BEGIN_SRC emacs-lisp
+(setq mac-command-modifier 'meta
+      mac-option-modifier 'none)
+#+END_SRC
+
+*** Disable the error bell
+
+#+BEGIN_SRC emacs-lisp
+(setq ring-bell-function 'ignore)
+#+END_SRC
+
+*** Shorten yes/no prompts to y/n
+
+#+BEGIN_SRC emacs-lisp
+(defalias 'yes-or-no-p 'y-or-n-p)
+#+END_SRC
+
+*** Backup settings
+
+#+BEGIN_SRC emacs-lisp
+(setq backup-directory-alist '(("." . "~/.emacs.d/backup"))
+    backup-by-copying t    ; Don't delink hardlinks
+    version-control t      ; Use version numbers on backups
+    delete-old-versions t  ; Automatically delete excess backups
+    kept-new-versions 20   ; how many of the newest versions to keep
+    kept-old-versions 5    ; and how many of the old
+    )
+#+END_SRC
+
+*** General formatting
+
+Always remote trailing whitespace from lines.
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+#+END_SRC
+
+* Personal Information
+
+#+BEGIN_SRC emacs-lisp
+(setq user-full-name "Chris Neave"
+      user-mail-address "chrispneave@gmail.com")
+#+END_SRC
+* Modes
+** org-mode
+
+#+BEGIN_SRC emacs-lisp
+(setq org-modules '(org-habit))
+(org-load-modules-maybe t)
+
+(setq org-agenda-files '("~/org/"))
+(global-set-key "\C-ca" 'org-agenda)
+
+(org-babel-do-load-languages 'org-babel-load-languages '(
+							 (python . t)
+							 (plantuml . t)
+							 (dot . t)))
+
+(setq org-plantuml-jar-path (expand-file-name "/usr/share/plantuml/plantuml.jar"))
+#+END_SRC
+
+*** Workflow
+
+#+BEGIN_SRC emacs-lisp
+(setq org-todo-keywords
+      '((sequence "TODO(t)" "DOING(p!)" "BLOCKED(b@/!)" "|" "DONE(d!)" "CANCELLED(c@)")))
+
+(setq org-todo-keyword-faces
+      '(("TODO" . org-warning)
+        ("BLOCKED" . "orange")
+        ("CANCELLED" . "gray")))
+#+END_SRC
+
+*** Dependencies
+
+Ensure child todo and checkbox items block the parent from being marked as done until al child items are also marked as done.
+
+#+BEGIN_SRC emacs-lisp
+(setq org-enforce-todo-dependencies t)
+(setq org-enforce-todo-checkbox-dependencies t)
+#+END_SRC
+
+** ledger
+
+#+BEGIN_SRC emacs-lisp
+(my/package-install-if-missing 'ledger-mode)
+#+END_SRC
+
+** eshell
+
+Setup eshell to translate ANSI SGR escape sequences.
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+(add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
+#+END_SRC
+
+* Themes
+** zenburn
+
+#+BEGIN_SRC emacs-lisp
+(my/package-install-if-missing 'zenburn-theme)
+
+(load-theme 'zenburn t)
+#+END_SRC
+
+* Programming
+
+
+** Git
+
+#+BEGIN_SRC emacs-lisp
+(use-package magit
+    :ensure t
+    :bind ("C-x g" . magit-status))
+#+END_SRC
+
+Display line changes in buffer gutter.
+
+#+BEGIN_SRC emacs-lisp
+(use-package git-gutter
+    :ensure t
+    :config
+    (global-git-gutter-mode 't)
+    :diminish git-gutter-mode)
+#+END_SRC
+
+Timemachine for stepping through file commit history.
+
+#+BEGIN_SRC emacs-lisp
+(use-package git-timemachine
+    :ensure t)
+#+END_SRC
+
+** Python
+
+#+BEGIN_SRC emacs-lisp
+(my/package-install-if-missing 'elpy)
+
+(elpy-enable)
+#+END_SRC

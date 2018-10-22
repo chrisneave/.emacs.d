@@ -1,0 +1,9 @@
+config.el
+*.*~
+session.*
+elpa
+.org-id-locations
+auto-save-list
+eshell
+url
+bookmarks
