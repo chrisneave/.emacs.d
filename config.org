@@ -135,6 +135,15 @@ Ensure child todo and checkbox items block the parent from being marked as done 
 (setq org-enforce-todo-checkbox-dependencies t)
 #+END_SRC
 
+*** Capture
+
+Capture to the ~/org/inbox.org file.
+
+#+BEGIN_SRC emacs-lisp
+(setq org-default-notes-file (concat org-directory "/inbox.org"))
+(define-key global-map "\C-cc" 'org-capture)
+#+END_SRC
+
 ** ledger
 
 #+BEGIN_SRC emacs-lisp
