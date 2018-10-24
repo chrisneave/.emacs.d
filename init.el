@@ -6,3 +6,6 @@
 (package-initialize)
 
 (org-babel-load-file "~/.emacs.d/config.org")
+
+;; Load customizations if they exist.
+(my/load-file-maybe "~/.emacs.d/customize.el")

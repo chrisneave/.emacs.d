@@ -203,3 +203,12 @@ Timemachine for stepping through file commit history.
 
 (elpy-enable)
 #+END_SRC
+* Customization
+
+Define a function that will load the specified file if it exists.
+
+#+BEGIN_SRC emacs-lisp
+(defun my/load-file-maybe (filename)
+    (if (file-exists-p filename)
+        (load-file filename)))
+#+END_SRC
