@@ -106,10 +106,15 @@ Always remote trailing whitespace from lines.
 (setq org-agenda-files '("~/org/"))
 (global-set-key "\C-ca" 'org-agenda)
 
-(org-babel-do-load-languages 'org-babel-load-languages '(
-							 (python . t)
-							 (plantuml . t)
-							 (dot . t)))
+;; Create a list to store languages for babel.
+(setq my/org-babel-languages '())
+
+;; Create a function that adds languages to babel.
+(defun my/org-babel-add-language (lang)
+  (add-to-list 'my/org-babel-languages (cons lang t)))
+
+(my/org-babel-add-language 'dot)
+(my/org-babel-add-language 'plantuml)
 
 (setq org-plantuml-jar-path (expand-file-name "/usr/share/plantuml/plantuml.jar"))
 #+END_SRC
@@ -202,7 +207,12 @@ Timemachine for stepping through file commit history.
 (my/package-install-if-missing 'elpy)
 
 (elpy-enable)
+
+(my/org-babel-add-language 'python)
 #+END_SRC
+
+** Javascript
+
 * Customization
 
 Define a function that will load the specified file if it exists.
@@ -211,4 +221,10 @@ Define a function that will load the specified file if it exists.
 (defun my/load-file-maybe (filename)
     (if (file-exists-p filename)
         (load-file filename)))
+#+END_SRC
+
+* Babel Languages
+
+#+BEGIN_SRC emacs-lisp
+(org-babel-do-load-languages 'org-babel-load-languages my/org-babel-languages)
 #+END_SRC
