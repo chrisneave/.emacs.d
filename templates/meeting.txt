@@ -1,0 +1,7 @@
+* %<<%Y-%m-%d %a %H:00-%H:00>> %?
+:PROPERTIES:
+:location:
+:END:
+
+- Agenda
+  1.

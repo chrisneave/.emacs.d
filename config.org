@@ -142,11 +142,27 @@ Ensure child todo and checkbox items block the parent from being marked as done 
 
 *** Capture
 
-Capture to the ~/org/inbox.org file.
-
 #+BEGIN_SRC emacs-lisp
 (setq org-default-notes-file (concat org-directory "/inbox.org"))
 (define-key global-map "\C-cc" 'org-capture)
+#+END_SRC
+
+**** Templates
+
+#+BEGIN_SRC emacs-lisp
+(setq org-capture-templates
+  '(("t" "Task" entry
+    (file+headline "~/org/inbox.org" "Tasks")
+    (file "~/.emacs.d/templates/task.txt"))
+   ("m" "Meeting" entry
+    (file+headline "~/org/inbox.org" "Meetings")
+    (file "~/.emacs.d/templates/meeting.txt"))
+   ("j" "Journal" entry
+    (file+olp+datetree "~/org/journal.org")
+    (file "~/.emacs.d/templates/journal.txt") :tree-type week :immediate-finish t)
+   ("c" "Check-in" entry
+    (file+olp+datetree "~/org/checkins.org")
+    (file "~/.emacs.d/templates/checkin.txt") :tree-type week)))
 #+END_SRC
 
 ** ledger
@@ -174,7 +190,11 @@ Setup eshell to translate ANSI SGR escape sequences.
 #+END_SRC
 
 * Programming
+** Linting
 
+#+BEGIN_SRC emacs-lisp
+
+#+END_SRC
 
 ** Git
 
