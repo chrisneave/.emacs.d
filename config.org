@@ -7,7 +7,9 @@
 (add-to-list 'package-archives
              '("gnu" . "https://elpa.gnu.org/packages/") t)
 (add-to-list 'package-archives
-             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+             '("melpa" . "https://melpa.org/packages/") t)
+;;(add-to-list 'package-archives
+;;             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 
 (package-initialize)
 #+END_SRC
@@ -241,6 +243,15 @@ Timemachine for stepping through file commit history.
 (my/package-install-if-missing 'js2-mode)
 
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+
+(my/package-install-if-missing 'add-node-modules-path)
+
+(eval-after-load 'js2-mode
+  '(add-hook 'js2-mode-hook #'add-node-modules-path))
+
+(my/package-install-if-missing 'prettier-js)
+;;(require 'prettier-js)
+(add-hook 'js2-mode-hook 'prettier-js-mode)
 
 ;; Disable jshint in favour of eslint.
 (setq-default flycheck-disabled-checkers
