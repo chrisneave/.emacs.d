@@ -189,11 +189,22 @@ Setup eshell to translate ANSI SGR escape sequences.
 (load-theme 'zenburn t)
 #+END_SRC
 
+* eshell
+** Fix eshell PATH to match default shell PATH
+
+#+BEGIN_SRC emacs-lisp
+(my/package-install-if-missing 'exec-path-from-shell)
+
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
+#+END_SRC
+
 * Programming
 ** Linting
 
 #+BEGIN_SRC emacs-lisp
-
+(my/package-install-if-missing 'flycheck)
+(global-flycheck-mode)
 #+END_SRC
 
 ** Git
@@ -221,17 +232,43 @@ Timemachine for stepping through file commit history.
     :ensure t)
 #+END_SRC
 
-** Python
+** Languages
+*** Python
+
+*** Javascript
 
 #+BEGIN_SRC emacs-lisp
-(my/package-install-if-missing 'elpy)
+(my/package-install-if-missing 'js2-mode)
 
-(elpy-enable)
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 
-(my/org-babel-add-language 'python)
+;; Disable jshint in favour of eslint.
+(setq-default flycheck-disabled-checkers
+  (append flycheck-disabled-checkers
+    '(javascript-jshint)))
+
+;; use local eslint from node_modules before global
+;; http://emacs.stackexchange.com/questions/21205/flycheck-with-file-relative-eslint-executable
+(defun my/use-eslint-from-node-modules ()
+  (let* ((root (locate-dominating-file
+                (or (buffer-file-name) default-directory)
+                "node_modules"))
+         (eslint (and root
+                      (expand-file-name "node_modules/eslint/bin/eslint.js"
+                                        root))))
+    (when (and eslint (file-executable-p eslint))
+      (setq-local flycheck-javascript-eslint-executable eslint))))
+
+(add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules)
 #+END_SRC
 
-** Javascript
+*** JSON
+
+#+BEGIN_SRC emacs-lisp
+
+#+END_SRC
+
+** Line numbers
 
 * Customization
 
