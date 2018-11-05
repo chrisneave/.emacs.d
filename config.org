@@ -258,6 +258,14 @@ Timemachine for stepping through file commit history.
 ** Languages
 *** Python
 
+ #+BEGIN_SRC emacs-lisp
+ (my/package-install-if-missing 'elpy)
+
+ (elpy-enable)
+
+ (my/org-babel-add-language 'python)
+ #+END_SRC
+
 *** Javascript
 
 #+BEGIN_SRC emacs-lisp
@@ -309,6 +317,7 @@ Timemachine for stepping through file commit history.
 
 (add-hook 'js2-mode-hook 'linum-mode)
 (add-hook 'json-mode-hook 'linum-mode)
+(add-hook 'python-mode-hook 'linum-mode)
 #+END_SRC
 
 * Customization
