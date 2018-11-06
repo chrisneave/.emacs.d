@@ -297,7 +297,9 @@ Timemachine for stepping through file commit history.
 *** JSON
 
 #+BEGIN_SRC emacs-lisp
-
+(use-package json-mode
+  :ensure t
+  :config)
 #+END_SRC
 
 ** Line numbers
