@@ -201,6 +201,16 @@ Setup eshell to translate ANSI SGR escape sequences.
   (exec-path-from-shell-initialize))
 #+END_SRC
 
+* Completion
+** Ido
+
+#+BEGIN_SRC emacs-lisp
+(use-package ido
+  :ensure t
+  :config
+  (ido-mode t))
+#+END_SRC
+
 * Programming
 ** Linting
 
