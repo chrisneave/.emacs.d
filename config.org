@@ -182,6 +182,15 @@ Setup eshell to translate ANSI SGR escape sequences.
 (add-to-list 'comint-output-filter-functions 'ansi-color-process-output)
 #+END_SRC
 
+Fix eshell PATH to match default shell PATH.
+
+#+BEGIN_SRC emacs-lisp
+(my/package-install-if-missing 'exec-path-from-shell)
+
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
+#+END_SRC
+
 * Themes
 ** zenburn
 
@@ -189,16 +198,6 @@ Setup eshell to translate ANSI SGR escape sequences.
 (my/package-install-if-missing 'zenburn-theme)
 
 (load-theme 'zenburn t)
-#+END_SRC
-
-* eshell
-** Fix eshell PATH to match default shell PATH
-
-#+BEGIN_SRC emacs-lisp
-(my/package-install-if-missing 'exec-path-from-shell)
-
-(when (memq window-system '(mac ns x))
-  (exec-path-from-shell-initialize))
 #+END_SRC
 
 * Completion
