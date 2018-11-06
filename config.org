@@ -202,13 +202,16 @@ Setup eshell to translate ANSI SGR escape sequences.
 #+END_SRC
 
 * Completion
-** Ido
+** Ivy
 
 #+BEGIN_SRC emacs-lisp
-(use-package ido
+(use-package ivy
   :ensure t
   :config
-  (ido-mode t))
+  (ivy-mode 1)
+  (setq ivy-use-virtual-buffers t)
+  (setq ivy-count-format "(%d/%d) ")
+  (setq magit-completing-read-function 'ivy-completing-read))
 #+END_SRC
 
 * Programming
