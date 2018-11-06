@@ -304,6 +304,13 @@ Timemachine for stepping through file commit history.
 
 ** Line numbers
 
+#+BEGIN_SRC emacs-lisp
+(setq linum-format "%d ")
+
+(add-hook 'js2-mode-hook 'linum-mode)
+(add-hook 'json-mode-hook 'linum-mode)
+#+END_SRC
+
 * Customization
 
 Define a function that will load the specified file if it exists.
