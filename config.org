@@ -173,6 +173,12 @@ Ensure child todo and checkbox items block the parent from being marked as done 
 (my/package-install-if-missing 'ledger-mode)
 #+END_SRC
 
+Use ISO date format for transactions, e.g. YYYY-MM-DD, instead of the default YYYY/MM/DD.
+
+#+BEGIN_SRC emacs-lisp
+(setq ledger-use-iso-dates t)
+#+END_SRC
+
 ** eshell
 
 Setup eshell to translate ANSI SGR escape sequences.
