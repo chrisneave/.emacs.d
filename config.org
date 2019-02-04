@@ -167,6 +167,15 @@ Ensure child todo and checkbox items block the parent from being marked as done 
     (file "~/.emacs.d/templates/checkin.txt") :tree-type week)))
 #+END_SRC
 
+*** Link handling
+
+Create bindings to allow links to headings to be captured and inserted. Referenced from [[https://emacs.stackexchange.com/a/19609/20677][Stack Exchange: org-mode link to heading in other org-file]].
+
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "C-c l") 'org-store-link)
+(global-set-key (kbd "C-c C-l") 'org-insert-link)
+#+END_SRC
+
 ** ledger
 
 #+BEGIN_SRC emacs-lisp
