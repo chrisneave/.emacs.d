@@ -325,6 +325,16 @@ Timemachine for stepping through file commit history.
   :config)
 #+END_SRC
 
+*** Rust
+
+#+BEGIN_SRC emacs-lisp
+(use-package rust-mode
+  :ensure t
+  :config)
+
+(setq rust-format-on-save t)
+#+END_SRC
+
 ** Line numbers
 
 #+BEGIN_SRC emacs-lisp
