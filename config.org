@@ -179,7 +179,21 @@ Create bindings to allow links to headings to be captured and inserted. Referenc
 ** ledger
 
 #+BEGIN_SRC emacs-lisp
-(my/package-install-if-missing 'ledger-mode)
+(use-package ledger-mode
+    :mode ("\\.dat\\'"
+           "\\.ledger\\'")
+    :bind (:map ledger-mode-map
+          ("C-x C-s" . my/ledger-save))
+    :preface
+    (defun my/ledger-save ()
+        "Automatically clean the ledger buffer on each save."
+        (interactive)
+        (save-excursion
+            (when (buffer-modified-p)
+                (with-demoted-errors (ledger-mode-clean-buffer))
+                (save-buffer)))))
+
+(add-hook 'ledger-mode-hook #'ledger-flymake-enable)
 #+END_SRC
 
 Use ISO date format for transactions, e.g. YYYY-MM-DD, instead of the default YYYY/MM/DD.
