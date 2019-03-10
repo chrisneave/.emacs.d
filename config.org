@@ -134,6 +134,8 @@ Always remote trailing whitespace from lines.
       '(("TODO" . org-warning)
         ("BLOCKED" . "orange")
         ("CANCELLED" . "gray")))
+
+(setq org-log-into-drawer t)
 #+END_SRC
 
 *** Dependencies
