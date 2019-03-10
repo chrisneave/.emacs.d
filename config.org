@@ -115,8 +115,11 @@ Always remote trailing whitespace from lines.
 (defun my/org-babel-add-language (lang)
   (add-to-list 'my/org-babel-languages (cons lang t)))
 
+(require 'ob-awk)
+
 (my/org-babel-add-language 'dot)
 (my/org-babel-add-language 'plantuml)
+(my/org-babel-add-language 'awk)
 
 (setq org-plantuml-jar-path (expand-file-name "/usr/share/plantuml/plantuml.jar"))
 #+END_SRC
