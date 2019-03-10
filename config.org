@@ -136,6 +136,8 @@ Always remote trailing whitespace from lines.
         ("CANCELLED" . "gray")))
 
 (setq org-log-into-drawer t)
+
+(setq org-startup-indented t)
 #+END_SRC
 
 *** Dependencies
